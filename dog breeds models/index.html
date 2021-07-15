@@ -1,0 +1,25 @@
+<script src="https://unpkg.com/@tensorflow/tfjs"></script>
+<script src="https://unpkg.com/@tensorflow/tfjs-automl"></script>
+<img id="daisy" crossorigin="anonymous" src="https://www.thesprucepets.com/thmb/FEsGt1xpqpRi_YzoMCuzPEWcvso=/872x654/smart/filters:no_upscale()/1024px-Bulldog_inglese-cf544d354159462c8c0d93db5f1adbe6.jpg">
+<script>
+async function run() {
+  const model = await tf.automl.loadImageClassification('model.json');
+  const image = document.getElementById('daisy');
+  const predictions = await model.classify(image);
+  console.log(predictions);
+  // Show the resulting object on the page.
+  result = []
+  predictions.forEach(element => {
+    console.log('element',element)
+    if(element.prob > 0.5){
+      result.push(element)
+
+    }
+    
+  });
+  const pre = document.createElement('pre');
+  pre.textContent = JSON.stringify(result);
+  document.body.append(pre);
+}
+run();
+</script>
